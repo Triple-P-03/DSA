@@ -131,7 +131,7 @@ int main()
     // cout << " the revereed string is " << s;
 
 
-    string pal="cattac";
+    string pal="NOON";
     string str=s;
     cout << " checking the palindrome ::::->" <<(palindrome(str,0,str.size()-1)?"found":"not found");
     return 0;
