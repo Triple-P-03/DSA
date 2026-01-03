@@ -94,16 +94,63 @@ using namespace std;
 //     }
 // }
 
-bool palindrome(string str, int i, int j)
-{
-    if (i >= j)
-        return true;
-    if (str[i] != str[j])
-        return false;
+// bool palindrome(string str, int i, int j)
+// {
+//     if (i >= j)
+//         return true;
+//     if (str[i] != str[j])
+//         return false;
 
-    i++;
-    j--;
-    return palindrome(str, i, j);
+//     i++;
+//     j--;
+//     return palindrome(str, i, j);
+// }
+
+// quick sort
+int partition(int arr[], int s, int e)
+{
+    int pivot = arr[s];
+    int count = 0;
+
+    // Count elements <= pivot
+    for (int i = s + 1; i <= e; i++)
+    {
+        if (arr[i] <= pivot)
+            count++;
+    }
+
+    // Place pivot at correct position
+    int pivotIndx = s + count;
+    swap(arr[pivotIndx], arr[s]);
+
+    // Rearrange left and right parts
+    int i = s, j = e;
+    while (i < pivotIndx && j > pivotIndx)
+    {
+        while (arr[i] <= pivot)
+            i++;
+        while (arr[j] > pivot)
+            j--;
+
+        if (i < pivotIndx && j > pivotIndx)
+        {
+            swap(arr[i], arr[j]);
+            i++;
+            j--;
+        }
+    }
+
+    return pivotIndx;
+}
+void quicksort(int arr[], int s, int e)
+{
+    if (s >= e)
+        return;
+
+    int p = partition(arr, s, e);
+
+    quicksort(arr, s, p - 1);
+    quicksort(arr, p + 1, e);
 }
 
 int main()
@@ -112,15 +159,15 @@ int main()
     // cout << "the power is " << power(3,3);
     // cout << "the count is " << count(1000000);
     // cout << "the fib  is " << fib(6);
-    int arr[] = {
-        1,
-        3,
-        4,
-        6,
-        9,
-        12};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int e = n - 1;
+    // int arr[] = {
+    //     1,
+    //     3,
+    //     4,
+    //     6,
+    //     9,
+    //     12};
+    // int n = sizeof(arr) / sizeof(arr[0]);
+    // int e = n - 1;
 
     string s = "cat ";
 
@@ -130,9 +177,18 @@ int main()
     // reverse(s, 0, s.size() - 1);
     // cout << " the revereed string is " << s;
 
+    // string pal = "NOON";
+    // string str = s;
+    // cout << " checking the palindrome ::::->" << (palindrome(str, 0, str.size() - 1) ? "found" : "not found");
 
-    string pal="NOON";
-    string str=s;
-    cout << " checking the palindrome ::::->" <<(palindrome(str,0,str.size()-1)?"found":"not found");
+    int arr[] = {9, 3, 4, 2, 5, 7,33,        1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    quicksort(arr, 0, n - 1);
+
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
     return 0;
+
+
 }
